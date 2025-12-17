@@ -1,26 +1,199 @@
 @import "tailwindcss";
 
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-main: #fefae0;
+  --card-bg: #ffffff;
+  --accent: #676f53;
+  --accent-soft: #b3b491;
+  --text-main: #381d03;
+  --text-muted: #736046;
+  --border-soft: #a19379;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --bg-main: #1b1b1b;
+  --card-bg: #242424;
+  --accent: #b3b491;
+  --accent-soft: #3a3a2f;
+  --text-main: #fefae0;
+  --text-muted: #bdb8a5;
+  --border-soft: #444;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  body {
+    background: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(
+      --font-geist-sans,
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      "Segoe UI"
+    );
+    margin: 0;
+    padding: 0;
+    antialiased: true;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  img,
+  picture,
+  video {
+    max-width: 100%;
+    display: block;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+
+@layer components {
+  /* Card */
+  .card {
+    @apply rounded-2xl border p-6;
+    background: var(--card-bg);
+    border-color: var(--border-soft);
+  }
+
+ 
+  .btn {
+    @apply inline-flex items-center justify-center gap-2
+      rounded-lg px-4 py-2 text-sm font-semibold transition;
+    background: var(--accent);
+    color: white;
+  }
+
+  .btn:hover {
+    filter: brightness(0.95);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+      rounded-lg px-4 py-2 text-sm font-semibold transition;
+    background: transparent;
+    border: 1px solid var(--border-soft);
+    color: var(--text-main);
+  }
+
+  .btn-ghost:hover {
+    background: var(--accent-soft);
+  }
+
+ 
+  .input {
+    @apply w-full rounded-md px-3 py-2 border outline-none;
+    background: var(--bg-main);
+    border-color: var(--border-soft);
+    color: var(--text-main);
+  }
+
+  .input::placeholder {
+    color: var(--text-muted);
+  }
+
+ 
+  .muted {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+}
+
+
+
+.hover-card {
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.link-hover {
+  transition: color 150ms ease;
+}
+
+.link-hover:hover {
+  color: var(--accent);
+}
+
+.btn-hover {
+  transition: transform 150ms ease;
+}
+
+.btn-hover:hover {
+  transform: translateY(-1px);
+}
+
+
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@layer utilities {
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 180ms ease-out both;
+  }
+}
+.hover-card {
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+}
+
+button, a {
+  min-height: 44px;
+}
+
+
+.ut-button {
+  padding: 0 !important;
+  min-height: auto !important;
+}
+
+.ut-button span,
+.ut-button p,
+.ut-allowed-content,
+.ut-label,
+.ut-input-label {
+  display: none !important;
+}
+
+.ut-button svg {
+  display: block;
 }
