@@ -2,7 +2,8 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import ThemeToggle from "@/components/theme-toggle";
+import ToggleHero from "@/components/Togglehero";
+
 
 export default async function HomePage() {
   const session = await getServerSession(authOptions);
@@ -20,7 +21,9 @@ export default async function HomePage() {
           <h1 className="text-xl font-semibold tracking-tight">
             Identity
           </h1>
-          <ThemeToggle />
+          <div className="relative"
+          ><ToggleHero /></div>
+          
         </div>
 
        
