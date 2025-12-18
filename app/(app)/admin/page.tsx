@@ -9,9 +9,7 @@ export default function AdminOverviewPage() {
         description="Administrative tools and system management"
       />
 
-  
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-        
         <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
           <AdminCard
             href="/admin/users"
@@ -38,7 +36,6 @@ export default function AdminOverviewPage() {
           />
         </div>
 
-       
         <div
           className="
             card
@@ -46,6 +43,7 @@ export default function AdminOverviewPage() {
             bg-[var(--card-bg)]
             transition-all duration-300
             hover:shadow-lg
+            order-last lg:order-none
           "
         >
           <h3 className="text-sm font-semibold mb-2">
@@ -71,8 +69,6 @@ export default function AdminOverviewPage() {
     </div>
   );
 }
-
-
 
 function AdminCard({
   href,
@@ -101,7 +97,6 @@ function AdminCard({
         hover:shadow-xl
       "
     >
-      
       <div
         className="
           pointer-events-none
@@ -125,7 +120,6 @@ function AdminCard({
           {desc}
         </p>
 
-        
         <div className="mt-4 flex flex-wrap gap-2">
           {stats.map((s) => (
             <span

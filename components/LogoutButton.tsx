@@ -6,8 +6,9 @@ import Button from "./Button";
 export default function LogoutButton() {
   return (
     <Button
-      variant="ghost"
+      variant="primary"
       onClick={() => signOut({ callbackUrl: "/login" })}
+      className="rounded-full"
     >
       Logout
     </Button>

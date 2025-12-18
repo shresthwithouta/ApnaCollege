@@ -4,13 +4,17 @@ import { authOptions } from "@/lib/auth";
 import { connect } from "@/lib/db";
 import User from "@/models/User";
 import { UTApi } from "uploadthing/server";
+import mongoose from "mongoose";
 
-const utapi = new UTApi(); // ✅ instantiate
+const utapi = new UTApi();
 
 export async function PUT(req: Request) {
   const session = await getServerSession(authOptions);
   if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Unauthorized" },
+      { status: 401 }
+    );
   }
 
   await connect();
@@ -19,7 +23,10 @@ export async function PUT(req: Request) {
   const user = await User.findById(session.user.id);
 
   if (!user) {
-    return NextResponse.json({ error: "User not found" }, { status: 404 });
+    return NextResponse.json(
+      { error: "User not found" },
+      { status: 404 }
+    );
   }
 
 
@@ -28,17 +35,21 @@ export async function PUT(req: Request) {
     user.image = "";
   }
 
-
   if (body.remove === "banner" && user.banner) {
     await utapi.deleteFiles(user.banner);
     user.banner = "";
   }
 
-  
-  if (typeof body.name === "string") user.name = body.name;
-  if (typeof body.bio === "string") user.bio = body.bio;
 
-  
+  if (typeof body.name === "string") {
+    user.name = body.name;
+  }
+
+  if (typeof body.bio === "string") {
+    user.bio = body.bio;
+  }
+
+
   if (body.image && body.image !== user.image) {
     if (user.image) {
       await utapi.deleteFiles(user.image);
@@ -52,6 +63,14 @@ export async function PUT(req: Request) {
     }
     user.banner = body.banner;
   }
+
+
+  if (Array.isArray(body.tags)) {
+    user.tags = body.tags.map(
+      (id: string) => new mongoose.Types.ObjectId(id)
+    );
+  }
+
 
   await user.save();
 

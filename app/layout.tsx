@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
@@ -19,6 +19,11 @@ export const metadata: Metadata = {
   description: "A modern profile & identity platform",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -30,28 +35,25 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
       <head>
-       
         <style
-  dangerouslySetInnerHTML={{
-    __html: `
-      html, body {
-        transition:
-          background-color 450ms ease,
-          color 450ms ease;
-      }
+          dangerouslySetInnerHTML={{
+            __html: `
+              html, body {
+                transition:
+                  background-color 450ms ease,
+                  color 450ms ease;
+              }
 
-      /* Keep cards in sync with background */
-      .card {
-        transition:
-          background-color 450ms ease,
-          border-color 450ms ease,
-          color 450ms ease,
-          box-shadow 450ms ease;
-      }
-    `,
-  }}
-/>
-
+              .card {
+                transition:
+                  background-color 450ms ease,
+                  border-color 450ms ease,
+                  color 450ms ease,
+                  box-shadow 450ms ease;
+              }
+            `,
+          }}
+        />
       </head>
 
       <body suppressHydrationWarning className="min-h-screen">

@@ -14,7 +14,7 @@ type Props = {
 };
 
 export default function UserTagSelector({
-  selectedTags = [], // 👈 DEFAULT VALUE (KEY FIX)
+  selectedTags = [],
   onChange,
 }: Props) {
   const [tags, setTags] = useState<Tag[]>([]);

@@ -8,6 +8,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import AdminUserControls from "@/components/AdminUserControls";
 import { FiSettings } from "react-icons/fi";
+import BackButton from "@/components/BackButton";
 
 type PopulatedTag = {
   _id: {
@@ -41,7 +42,8 @@ export default async function UserProfilePage({ params }: Props) {
   const isAdmin = session?.user?.role === "admin";
 
   return (
-    <div className="flex justify-center py-12 px-4">
+    <div className="flex  flex-col justify-center items-center gap-6 py-12 px-4">
+      
       <div className="relative w-full max-w-2xl rounded-2xl border border-[#A19379] bg-white shadow-xl overflow-visible">
 
        
@@ -79,6 +81,7 @@ export default async function UserProfilePage({ params }: Props) {
                 </div>
               </div>
             </details>
+            
           </div>
         )}
 
@@ -145,6 +148,9 @@ export default async function UserProfilePage({ params }: Props) {
             </div>
           )}
         </div>
+      </div>
+      <div className="" >
+        <BackButton />
       </div>
     </div>
   );

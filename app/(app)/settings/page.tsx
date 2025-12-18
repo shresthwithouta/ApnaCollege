@@ -7,9 +7,8 @@ import { connect } from "@/lib/db";
 import User from "@/models/User";
 
 import AccountSettingsForm from "@/components/AccountSettingsForm";
-import "@/components/ChangePasswordForm";
 import DeleteAccount from "@/components/DeleteAccount";
-import "@/components/LogoutAllDevices";
+import LogoutButton from "@/components/LogoutButton";
 
 export default async function SettingsPage() {
   const session = await getServerSession(authOptions);
@@ -25,7 +24,7 @@ export default async function SettingsPage() {
 
   return (
     <>
-     
+      
       <style>{`
         .settings-scope,
         .settings-scope * {
@@ -51,7 +50,7 @@ export default async function SettingsPage() {
       `}</style>
 
       <div className="settings-scope min-h-screen bg-[#FEFAE0] p-6">
-       
+     
         <div className="mb-6">
           <h1 className="text-2xl font-extrabold">
             Account Settings
@@ -62,7 +61,7 @@ export default async function SettingsPage() {
         </div>
 
         <div className="space-y-6 max-w-3xl">
-          
+          {/* Account details */}
           <div className="rounded-2xl border border-[#A19379] bg-white p-6">
             <AccountSettingsForm
               initialUsername={user.username}
@@ -70,9 +69,21 @@ export default async function SettingsPage() {
             />
           </div>
 
-         
+       
           <div className="rounded-2xl border border-red-300 bg-white p-6">
             <DeleteAccount />
+          </div>
+
+      
+          <div className="md:hidden rounded-2xl border border-[#A19379] bg-white p-6">
+            <h2 className="text-lg font-bold mb-2">
+              Logout
+            </h2>
+            <p className="text-sm mb-4">
+              Sign out from this device
+            </p>
+
+            <LogoutButton />
           </div>
         </div>
       </div>
