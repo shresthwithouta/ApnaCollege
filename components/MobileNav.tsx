@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+
 import {
   FiHome,
   FiCompass,
@@ -12,6 +14,9 @@ import {
 
 export default function MobileNav() {
   const pathname = usePathname();
+  const { data: session } = useSession();
+
+  const isAdmin = session?.user?.role === "admin";
 
   function item(href: string, label: string, icon: React.ReactNode) {
     const active = pathname === href;
@@ -37,7 +42,8 @@ export default function MobileNav() {
         {item("/explore", "Explore", <FiCompass size={18} />)}
         {item("/profile", "Profile", <FiUser size={18} />)}
         {item("/settings", "Settings", <FiSettings size={18} />)}
-        {item("/admin", "Admin", <FiShield size={18} />)}
+
+        {isAdmin && item("/admin", "Admin", <FiShield size={18} />)}
       </div>
     </nav>
   );

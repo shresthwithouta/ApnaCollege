@@ -2,6 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import Button from "@/components/Button";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+
+ const session = await getServerSession(authOptions);
+
+  if (!session || session.user.role !== "admin") {
+    redirect("/dashboard");
+  }
 
 type Tag = {
   _id: string;

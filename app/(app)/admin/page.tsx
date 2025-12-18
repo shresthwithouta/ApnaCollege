@@ -1,6 +1,14 @@
 import PageHeader from "@/components/PageHeader";
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
+ const session = await getServerSession(authOptions);
+
+  if (!session || session.user.role !== "admin") {
+    redirect("/dashboard");
+  }
 export default function AdminOverviewPage() {
   return (
     <div className="relative space-y-6">
