@@ -7,12 +7,14 @@ import ExploreUsersGrid, {
 } from "@/components/ExploreUsersGrid";
 import "@/models/Tags";
 
+export const dynamic = "force-dynamic";
 
 type PopulatedTag = {
   _id: { toString(): string };
   name: string;
   color?: string;
 };
+
 
 export default async function ExplorePage() {
   await connect();
