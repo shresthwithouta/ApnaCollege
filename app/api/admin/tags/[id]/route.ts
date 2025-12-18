@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { connect } from "@/lib/db";
@@ -6,17 +6,11 @@ import Tag from "@/models/Tags";
 import User from "@/models/User";
 import AuditLog from "@/models/AuditLog";
 
-type RouteParams = {
-  params: {
-    id: string;
-  };
-};
-
 export async function DELETE(
-  _req: Request,
-  { params }: RouteParams
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const id = params.id;
+  const { id } = await params;
 
   const session = await getServerSession(authOptions);
 
@@ -29,13 +23,11 @@ export async function DELETE(
 
   await connect();
 
-  
   await User.updateMany(
     { tags: id },
     { $pull: { tags: id } }
   );
 
-  
   const deleted = await Tag.findByIdAndDelete(id);
 
   if (!deleted) {
@@ -45,7 +37,6 @@ export async function DELETE(
     );
   }
 
- 
   await AuditLog.create({
     action: "DELETE_TAG",
     actorId: session.user.id,

@@ -1,22 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/requireAdmin";
 import { connect } from "@/lib/db";
 import User from "@/models/User";
 
-type RouteContext = {
-  params: {
-    id: string;
-  };
-};
-
 export async function PUT(
-  req: Request,
-  { params }: RouteContext
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await params; // ✅ REQUIRED in Next.js 16
 
- 
-  
   const admin = await requireAdmin();
   if (!admin) {
     return NextResponse.json(
@@ -24,9 +16,6 @@ export async function PUT(
       { status: 403 }
     );
   }
-
- 
-
 
   if (admin._id.toString() === id) {
     return NextResponse.json(
